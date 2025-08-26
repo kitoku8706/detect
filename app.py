@@ -3,34 +3,56 @@ from ultralytics import YOLO
 from PIL import Image
 import numpy as np
 import cv2
+import os
+import gdown
 
+# =========================
+# 1️⃣ Google Drive에서 모델 다운로드
+# =========================
+FILE_ID = "여기에_파일_ID_입력"  # 공유 링크 파일 ID
+MODEL_PATH = "best.pt"
+
+if not os.path.exists(MODEL_PATH):
+    url = f"https://drive.google.com/uc?id={FILE_ID}"
+    st.info("모델 다운로드 중...")
+    gdown.download(url, MODEL_PATH, quiet=False)
+    st.success("모델 다운로드 완료!")
+
+# =========================
+# 2️⃣ 모델 로딩
+# =========================
 @st.cache_resource
-def load_model():
-    return YOLO("MODEL_PATH")  # 여기에 실제 모델 경로 넣기
+def load_model(path):
+    return YOLO(path)
 
-model = load_model()
+model = load_model(MODEL_PATH)
 names = model.names
 
+# =========================
+# 3️⃣ Streamlit UI
+# =========================
 st.title("YOLOv8 Object Detection 🚀")
 uploaded_file = st.file_uploader("이미지 업로드", type=["jpg", "jpeg", "png"])
 
 if uploaded_file is not None:
     image = Image.open(uploaded_file).convert("RGB")
-    results = model.predict(image, conf=0.25, iou=0.7)
+    results = model(image, conf=0.25, iou=0.7)
     r = results[0]
 
+    # 클래스별 탐지 개수
     class_ids = r.boxes.cls.cpu().numpy().astype(int)
     class_counts = {names[i]: (class_ids == i).sum() for i in np.unique(class_ids)}
-
     st.subheader("클래스별 탐지 개수")
     st.write(class_counts)
 
+    # 표시할 클래스 선택
     selected_classes = st.multiselect(
         "표시할 클래스 선택",
         options=list(names.values()),
         default=list(names.values())
     )
 
+    # 이미지에 박스 표시
     img_np = np.array(image)
     for box, cls_id, conf in zip(r.boxes.xyxy, r.boxes.cls, r.boxes.conf):
         cls_id = int(cls_id.item())
