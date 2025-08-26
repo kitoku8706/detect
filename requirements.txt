@@ -1,0 +1,24 @@
+# 필수 기본 패키지
+numpy>=1.24.0
+pandas>=2.0.0
+opencv-python>=4.7.0
+matplotlib>=3.7.0
+scipy>=1.11.0
+Pillow>=10.0.0
+scikit-learn>=1.3.0
+tqdm>=4.66.0
+pyyaml>=6.0
+
+# TensorFlow & Keras
+tensorflow>=2.14.0
+keras>=2.14.0
+keras-cv>=0.10.0
+
+# YOLOv8 (Ultralytics)
+ultralytics>=8.0.0
+
+# 파일 관리 & 경로 관련
+pathlib>=1.0.1
+
+# Optional (코랩 환경에서 Google Drive 사용 시)
+gdown>=4.9.6
