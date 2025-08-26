@@ -10,7 +10,7 @@ tqdm>=4.66.0
 pyyaml>=6.0
 
 # YOLOv8 (Ultralytics)
-ultralytics>=8.0.0
+ultralytics>=8.4.0
 
 # Streamlit
 streamlit>=1.25.0
@@ -20,3 +20,4 @@ pathlib>=1.0.1
 
 # Google Drive 다운로드
 gdown>=4.9.6
+
