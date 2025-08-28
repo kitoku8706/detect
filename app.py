@@ -6,10 +6,13 @@ import cv2
 import os
 import gdown
 
+
+
+
 # =========================
 # 1️⃣ Google Drive에서 모델 다운로드
 # =========================
-FILE_ID = "1mnKBhT3B1Pcf4kTR9sOtWUAWmn4gts9z"  # 공유 링크 파일 ID
+FILE_ID = "1VAufInjquVIf_efdvQnBXYRFKLyCjBae"  # 공유 링크 파일 ID
 MODEL_PATH = "best.pt"
 
 if not os.path.exists(MODEL_PATH):
